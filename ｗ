@@ -1,0 +1,38 @@
+# ロトセブンの番号予測プログラム
+
+# 過去の抽選番号とボーナス番号を使って、次回の抽選番号を予測する関数
+def predict_next_loto_seven(numbers_history, bonus_history):
+    # 過去の抽選番号とボーナス番号をひとつのリストに結合
+    all_numbers = []
+    for numbers in numbers_history:
+        all_numbers.extend(numbers)
+    all_numbers.extend(bonus_history)
+
+    # 抽選番号とボーナス番号の出現回数を数える
+    number_counts = {}
+    for number in all_numbers:
+        if number in number_counts:
+            number_counts[number] += 1
+        else:
+            number_counts[number] = 1
+
+    # 出現回数の多い順にソートして、予測された番号を取得
+    sorted_numbers = sorted(number_counts.items(), key=lambda x: x[1], reverse=True)
+    predicted_numbers = [num for num, _ in sorted_numbers[:7]]
+    return predicted_numbers
+
+if __name__ == "__main__":
+    # 過去の抽選番号の履歴
+    numbers_history = [
+        [2, 12, 17, 24, 28, 30, 32],
+        [7, 11, 12, 17, 19, 20, 26],
+        [5, 10, 13, 24, 29, 30, 35],
+        # 以下、過去のデータを続けて記入したものとする
+    ]
+
+    # 過去のボーナス番号の履歴
+    bonus_history = [3, 27, 2, 3, 21, 10, ...]
+
+    # 予測された次回の抽選番号を取得して表示
+    next_loto_seven_numbers = predict_next_loto_seven(numbers_history, bonus_history)
+    print("次回のロトセブンの予想番号:", next_loto_seven_numbers)
